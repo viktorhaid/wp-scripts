@@ -27,7 +27,7 @@ TMPFILE=/tmp/tmp.dump
 OUTFILE=/tmp/new.dump
 
 echo "DROP DATABASE IF EXISTS $MYSQL_DATABASE;" > $OUTFILE
-echo "CREATE DATABASE $MYSQL_DATABASE DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;" >> $OUTFILE
+echo "CREATE DATABASE $MYSQL_DATABASE DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;" >> $OUTFILE
 echo "USE $MYSQL_DATABASE;" >> $OUTFILE
 
 cp $WP_IMPORT_DUMP $TMPFILE
@@ -41,4 +41,4 @@ cat $TMPFILE >> $OUTFILE
 
 echo "importing dump file into mysql"
 
-mariadb -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST --default_character_set utf8 < $OUTFILE
+mariadb -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST --default_character_set utf8mb4 < $OUTFILE
