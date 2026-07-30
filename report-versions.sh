@@ -3,9 +3,11 @@ set -e
 #check if APP_STATUS_API and STATUS_API_KEY are not empty
 if [[ -n "$VERSIONS_API_ENDPOINT" && -n "$VERSIONS_API_KEY" ]]; then
   
-# Detect the PHP, WordPress, and Node.js versions
+# Detect the PHP and WordPress versions
 PHP_VERSION=$(php -v | head -n 1 | cut -d ' ' -f 2)
 WP_VERSION=$(wp core version --skip-plugins --skip-themes --skip-packages)
+# NGINX_VERSION is injected as an env var from the nginx image tag,
+# since the nginx binary is not present in this container.
 
  # Determine stage based on WP_ENV
 if [[ "$WP_ENV" == "production" ]]; then
@@ -32,6 +34,10 @@ JSON_PAYLOAD=$(cat <<EOF
         {
             "name": "wordpress",
             "version": "$WP_VERSION"
+        },
+        {
+            "name": "nginx",
+            "version": "$NGINX_VERSION"
         }
     ]
 }
@@ -52,4 +58,5 @@ curl -X POST \
 else
   wp core version --extra
   php -v
+  echo "nginx $NGINX_VERSION"
 fi
