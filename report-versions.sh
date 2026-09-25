@@ -7,7 +7,7 @@ if [[ -n "$VERSIONS_API_ENDPOINT" && -n "$VERSIONS_API_KEY" ]]; then
 PHP_VERSION=$(php -v | head -n 1 | cut -d ' ' -f 2)
 WP_VERSION=$(wp core version --skip-plugins --skip-themes --skip-packages)
 # Reported in a separate plugins field. The API will accept it soon.
-PLUGINS_JSON=$(wp plugin list --format=json --fields=name,status,update,version,update_version --skip-plugins --skip-themes --skip-packages)
+PLUGINS_JSON=$(wp plugin list --format=json --fields=name,title,status,update,version,update_version --skip-plugins --skip-themes --skip-packages)
 # NGINX_VERSION is injected as an env var from the nginx image tag,
 # since the nginx binary is not present in this container.
 
